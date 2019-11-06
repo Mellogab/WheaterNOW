@@ -4,9 +4,7 @@ O objetivo deste projeto é o desenvolvimento de um aplicativo mobile que terá 
 
 How it Works?
 
-Através do dashboard WheaterNow Web, usuários poderão solicitar o monitoramento de uma cidade específica. A partir dessa requisição <br>,
-um serviço irá realizar monitorar o clima daquela cidade armazenando os dados no sistema. A partir disso então, o usuário poderá definir<br>
-parametros de temperatura, e será avisado caso esses parametros sejam atingidos.
+Através do dashboard WheaterNow Web, usuários poderão solicitar o monitoramento de uma cidade específica. A partir dessa requisição, um serviço irá realizar monitorar o clima daquela cidade armazenando os dados no sistema. A partir disso então, o usuário poderá definir parametros de temperatura, e será avisado caso esses parametros sejam atingidos.
 
 <br/><br/>Features
 
