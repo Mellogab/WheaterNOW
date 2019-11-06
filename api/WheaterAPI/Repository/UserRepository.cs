@@ -7,7 +7,7 @@ using WheaterAPI.Model;
 
 namespace WheaterAPI.Repository
 {
-    public class UserRepository : IRepository
+    public class UserRepository 
     {
         private SqlConnection conn;
         private User _user;

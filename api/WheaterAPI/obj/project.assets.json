@@ -4981,11 +4981,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\GabrielC2\\Documents\\PersonalProjects\\WheaterNow\\api\\WheaterNOW\\WheaterAPI\\WheaterAPI.csproj",
+      "projectUniqueName": "C:\\Users\\GabrielC2\\Documents\\PersonalProjects\\WheaterNow\\api\\WheaterAPI\\WheaterAPI.csproj",
       "projectName": "WheaterAPI",
-      "projectPath": "C:\\Users\\GabrielC2\\Documents\\PersonalProjects\\WheaterNow\\api\\WheaterNOW\\WheaterAPI\\WheaterAPI.csproj",
+      "projectPath": "C:\\Users\\GabrielC2\\Documents\\PersonalProjects\\WheaterNow\\api\\WheaterAPI\\WheaterAPI.csproj",
       "packagesPath": "C:\\Users\\GabrielC2\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\GabrielC2\\Documents\\PersonalProjects\\WheaterNow\\api\\WheaterNOW\\WheaterAPI\\obj\\",
+      "outputPath": "C:\\Users\\GabrielC2\\Documents\\PersonalProjects\\WheaterNow\\api\\WheaterAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

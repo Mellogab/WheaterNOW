@@ -9,7 +9,7 @@ using Dapper;
 
 namespace WheaterAPI.Repository
 {
-    public class WheaterRepository : IRepository
+    public class WheaterRepository 
     {
         public SqlConnection conn;
         
