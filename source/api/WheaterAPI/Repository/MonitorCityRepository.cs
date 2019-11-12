@@ -10,76 +10,58 @@ namespace WheaterAPI.Repository
     public class MonitorCityRepository : IRepository
     {
         public SqlConnection conn;
-
+        private MonitorCity _monitorCity;
+        public IConfiguration _iconfig = null;
         public MonitorCityRepository(IConfiguration iconfig)
         {
             conn = new BaseRepository(iconfig).Instancia;
         }
 
-        public List<MonitorCity> GetCities()
+        public MonitorCityRepository(IConfiguration iconfig, MonitorCity monitorCity)
         {
-            return conn.Query<MonitorCity>("SELECT * FROM [MonitorCity_W]").ToList();
-        }
-
-        public List<MonitorCity> GetCityByName(MonitorCity city)
-        {
-            DynamicParameters vParams = new DynamicParameters();
-            vParams.Add("@Username", city.CitySearched);
-            
-            return conn.Query<MonitorCity>("SELECT * FROM [MonitorCity_W] where CitySearched = @CitySearched", vParams).ToList();
-        }
-
-        public List<MonitorCity> Register(MonitorCity city)
-        {
-            DynamicParameters vParams = new DynamicParameters();
-            vParams.Add("@CitySearched", city.CitySearched);
-            vParams.Add("@IdUser", city.IdUser);
-
-            return conn.Query<MonitorCity>("INSERT INTO [MonitorCity_W](CitySearched,IdUser,Status,Message) VALUES(@CitySearched,@IdUser,NULL,NULL)", vParams).ToList();
-        }
-
-        public List<MonitorCity> Update(MonitorCity city)
-        {
-            DynamicParameters vParams = new DynamicParameters();
-            vParams.Add("@CitySearched", city.CitySearched);
-            vParams.Add("@IdUser", city.IdUser);
-            vParams.Add("@Message", city.Message);
-            vParams.Add("@Status", city.Status);
-
-            return conn.Query<MonitorCity>("UPDATE [MonitorCity_W] SET CitySearched = @CitySearched, IdUser = @IdUser, Message = @Message, Status = @Status WHERE Id = @Id", vParams).ToList();
-        }
-
-        public List<MonitorCity> Delete(int Id)
-        {
-            DynamicParameters vParams = new DynamicParameters();
-            vParams.Add("@Id", Id);
-
-            return conn.Query<MonitorCity>("DELETE FROM [MonitorCity_W] WHERE Id = @Id", vParams).ToList();
+            conn = new BaseRepository(iconfig).Instancia;
+            _monitorCity = monitorCity;
         }
 
         public void Add()
         {
-            throw new System.NotImplementedException();
+            DynamicParameters vParams = new DynamicParameters();
+            vParams.Add("@CitySearched", _monitorCity.CitySearched);
+            vParams.Add("@IdUser", _monitorCity.IdUser);
+
+            conn.Query<MonitorCity>("INSERT INTO [MonitorCity_W](CitySearched,IdUser,Status,Message) VALUES(@CitySearched,@IdUser,NULL,NULL)", vParams).ToList();
         }
 
         public void Remove()
         {
-            throw new System.NotImplementedException();
+            DynamicParameters vParams = new DynamicParameters();
+            vParams.Add("@Id", _monitorCity.Id);
+
+            conn.Query<MonitorCity>("DELETE FROM [MonitorCity_W] WHERE Id = @Id", vParams).ToList();
         }
 
         public void Update()
         {
-            throw new System.NotImplementedException();
+            DynamicParameters vParams = new DynamicParameters();
+            vParams.Add("@CitySearched", _monitorCity.CitySearched);
+            vParams.Add("@IdUser", _monitorCity.IdUser);
+            vParams.Add("@Message", _monitorCity.Message);
+            vParams.Add("@Status", _monitorCity.Status);
+
+            conn.Query<MonitorCity>("UPDATE [MonitorCity_W] SET CitySearched = @CitySearched, IdUser = @IdUser, Message = @Message, Status = @Status WHERE Id = @Id", vParams).ToList();
         }
 
         public IEnumerable<object> GetAll()
         {
-            throw new System.NotImplementedException();
+            return conn.Query<MonitorCity>("SELECT * FROM [MonitorCity_W]").ToList();
         }
 
         public object GetItemById()
         {
-            throw new System.NotImplementedException();
+            DynamicParameters vParams = new DynamicParameters();
+            vParams.Add("@Username", _monitorCity.CitySearched);
+
+            return conn.Query<MonitorCity>("SELECT * FROM [MonitorCity_W] where CitySearched = @CitySearched", vParams).ToList();
         }
     }
 }

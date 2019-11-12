@@ -32,13 +32,11 @@ namespace WheaterAPI.Factory
                     return new UserRepository(_iconfig, (User)_params);
 
                 case (int) Enums.Repository.MonitorCiry:
-                    //return new MonitorCityRepository<T>(_iconfig, (MonitorCity)_params);
-                    return new UserRepository(_iconfig, (User)_params);
+                    return new MonitorCityRepository(_iconfig, (MonitorCity)_params);
 
                 case (int) Enums.Repository.Wheater:
-                    //return new WheaterRepository<T>(_iconfig, (Wheater)_params);
-                    return new UserRepository(_iconfig, (User)_params);
-
+                    return new WheaterRepository(_iconfig, (Wheater)_params);
+                    
                 default:
                     return new UserRepository(_iconfig);
             }

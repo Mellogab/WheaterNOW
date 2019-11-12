@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using WheaterAPI.Factory;
 using WheaterAPI.Model;
 using WheaterAPI.Repository;
 
@@ -14,49 +15,66 @@ namespace WheaterAPI.Controllers
     {
         private readonly ILogger<MonitorCityController> _logger;
         public MonitorCityRepository repository;
+        public IConfiguration _iconfig;
 
         public MonitorCityController(ILogger<MonitorCityController> logger, IConfiguration iconfig)
         {
             _logger = logger;
+            _iconfig = iconfig;
             repository = new MonitorCityRepository(iconfig);
         }
 
         [HttpGet("Get")]
-        public ActionResult<IEnumerable<MonitorCity>> Get()
+        public IEnumerable<object> Get()
         {
-            return repository.GetCities().AsReadOnly();
+            var Factory = new FactoryRepository(_iconfig);
+            IRepository Repository = Factory.CreateFactoryRepository((int)Enums.Repository.MonitorCiry);
+
+            return Repository.GetAll();
         }
         
-        [HttpPost("GetUserByLogin")]
-        public ActionResult<IEnumerable<MonitorCity>> GetUserByLogin([FromBody] MonitorCity city)
+        [HttpPost("GetCitySearched")]
+        public object GetCitySearched([FromBody] MonitorCity city)
         {
-            return repository.GetCityByName(city).AsReadOnly();
+            var Factory = new FactoryRepository(_iconfig,city);
+            IRepository Repository = Factory.CreateFactoryRepository((int)Enums.Repository.MonitorCiry);
+
+            return Repository.GetItemById();
         }
 
         [HttpPost("Register")]
-        public ActionResult<IEnumerable<MonitorCity>> Register([FromBody] MonitorCity city)
+        public ActionResult Register([FromBody] MonitorCity city)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            
-            repository.Register(city);
+
+            var Factory = new FactoryRepository(_iconfig, city);
+            IRepository Repository = Factory.CreateFactoryRepository((int)Enums.Repository.MonitorCiry);
+
+            Repository.Add();
 
             return Ok();
         }
 
         [HttpPut("Update")]
-        public ActionResult<IEnumerable<MonitorCity>> Update([FromBody] MonitorCity city)
+        public ActionResult Update([FromBody] MonitorCity city)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            
-            repository.Update(city);
+
+            var Factory = new FactoryRepository(_iconfig, city);
+            IRepository Repository = Factory.CreateFactoryRepository((int)Enums.Repository.MonitorCiry);
+
+            Repository.Update();
 
             return Ok();
         }
 
         [HttpDelete("Delete/{Id:int}")]
-        public ActionResult<IEnumerable<MonitorCity>> Delete([System.Web.Http.FromUri()]int Id)
+        public ActionResult Delete([System.Web.Http.FromUri()]int Id)
         {
-            repository.Delete(Id);
+            var Factory = new FactoryRepository(_iconfig, new MonitorCity { Id = Id });
+            IRepository Repository = Factory.CreateFactoryRepository((int)Enums.Repository.MonitorCiry);
+
+            Repository.Remove();
 
             return Ok();
         }

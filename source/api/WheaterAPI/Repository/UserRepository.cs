@@ -11,9 +11,9 @@ namespace WheaterAPI.Repository
     {
         private SqlConnection conn;
         private User _user;
-        private UserBase _userBase;
         public IConfiguration _iconfig = null;
-        
+        private UserBase _userBase;
+
         public UserRepository(IConfiguration iconfig)
         {
             conn = new BaseRepository(iconfig).Instancia;
