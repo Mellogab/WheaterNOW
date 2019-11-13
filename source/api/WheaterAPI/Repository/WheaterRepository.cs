@@ -14,14 +14,16 @@ namespace WheaterAPI.Repository
         public SqlConnection conn;
         private Wheater _wheater;
         public IConfiguration _iconfig = null;
+
         public WheaterRepository(IConfiguration iconfig)
         {
             conn = new BaseRepository(iconfig).Instancia;
         }
 
-        public List<Wheater> GetWheaters()
+        public WheaterRepository(IConfiguration iconfig, Wheater wheater)
         {
-            return conn.Query<Wheater>("SELECT * FROM [Wheater_W]").ToList();
+            conn = new BaseRepository(iconfig).Instancia;
+            _wheater = wheater;
         }
 
         public List<Wheater> GetWheaterByCity(Wheater wheater)
@@ -61,12 +63,12 @@ namespace WheaterAPI.Repository
 
         public IEnumerable<object> GetAll()
         {
-            throw new NotImplementedException();
+            return conn.Query<Wheater>("SELECT * FROM [Wheater_W]").ToList();
         }
 
         public object GetItemById()
         {
-            throw new NotImplementedException();
+            return conn.Query<Wheater>("SELECT * FROM [Wheater_W] WHERE City = @City").ToList();
         }
     }
 }

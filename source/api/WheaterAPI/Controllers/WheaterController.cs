@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using WheaterAPI.Factory;
 using WheaterAPI.Model;
 using WheaterAPI.Repository;
 
@@ -14,35 +15,30 @@ namespace WheaterAPI.Controllers
     {
         private readonly ILogger<WheaterController> _logger;
         public WheaterRepository repository;
-
+        IConfiguration _iconfig;
         public WheaterController(ILogger<WheaterController> logger, IConfiguration iconfig)
         {
             _logger = logger;
+            _iconfig = iconfig;
             repository = new WheaterRepository(iconfig);
         }
 
         [HttpGet("Get")]
-        public ActionResult<IEnumerable<Wheater>> Get()
+        public IEnumerable<object> Get()
         {
-            return repository.GetWheaters().AsReadOnly();
+            var Factory = new FactoryRepository(_iconfig);
+            IRepository Repository = Factory.CreateFactoryRepository((int)Enums.Repository.Wheater);
+
+            return Repository.GetAll();
         }
 
         [HttpGet("GetWheaterByCity")]
-        public ActionResult<IEnumerable<Wheater>> GetWheaterByCity([FromBody] Wheater wheater)
+        public object GetWheaterByCity([FromBody] Wheater wheater)
         {
-            return repository.GetWheaterByCity(wheater).AsReadOnly();
-        }
+            var Factory = new FactoryRepository(_iconfig,wheater);
+            IRepository Repository = Factory.CreateFactoryRepository((int)Enums.Repository.Wheater);
 
-        [HttpGet("GetWheaterBetweenTemperatures")]
-        public ActionResult<IEnumerable<Wheater>> GetWheaterBetweenTemperatures([FromBody] Wheater wheater)
-        {
-            return repository.GetWheaterBetweenTemperatures(wheater).AsReadOnly();
-        }
-
-        [HttpGet("GetCities")]
-        public ActionResult<IEnumerable<string>> GetCities()
-        {
-            return repository.GetCitiesMonitored().AsReadOnly();
+            return Repository.GetItemById();
         }
     }
 }
